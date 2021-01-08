@@ -5,7 +5,6 @@ import {Join} from "./components/Join/Join";
 
 const App = () => {
 
-
     return (
         <div className="App">
             <Join/>
