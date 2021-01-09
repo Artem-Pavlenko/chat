@@ -37,9 +37,13 @@ io.on('connection', (socket) => {
     socket.on('ROOM:JOIN', ({roomId, userName}) => {
         console.log('(socket) user data:', {roomId, userName})
         socket.join(roomId)
-        rooms.get(roomId).get('users').socket(socket.id, userName)
-        const users = rooms.get(roomId).get('users').values()
+        // сохраняем в определённой комнате пользователя, который зашёл
+        rooms.get(roomId).get('users').set(socket.id, userName)
+
+        const users = [...rooms.get(roomId).get('users').values()]
+
         socket.to(roomId).broadcast.emit('ROOM:JOINED', users)
+        // socket.broadcast.to(roomId).emit('ROOM:JOINED', users)
     })
 
     console.log(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()} (socket) user connected:`, socket.id)

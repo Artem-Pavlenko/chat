@@ -6,8 +6,10 @@ export const Join = ({onLogin}) => {
 
     const [roomValue, setRoomValue] = useState('')
     const [nameValue, setNameValue] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const onConnect = () => {
+        setLoading(true)
         if (roomValue && nameValue) {
             chatAPI.connect(roomValue, nameValue).then(() => {
                 onLogin({roomId: roomValue, userName: nameValue})
@@ -31,7 +33,7 @@ export const Join = ({onLogin}) => {
                     placeholder={'Name'}
                 />
 
-                <button onClick={onConnect}>Enter</button>
+                <button disabled={loading} onClick={onConnect}>{loading ? 'entrance...': 'enter'}</button>
             </div>
         </div>
     )

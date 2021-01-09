@@ -1,9 +1,11 @@
-import React, {useReducer} from "react"
+import React, {useReducer, useEffect} from "react"
 import './App.scss'
 import {Join} from "./components/Join/Join"
 import {isJoined, stateReducer} from "./state/Reducer"
 import io from "socket.io-client"
 
+
+// 1:38
 
 const App = () => {
 
@@ -18,7 +20,11 @@ const App = () => {
         io().emit('ROOM:JOIN', data)
     }
 
-    console.log(state)
+    useEffect( () => {
+        io().on('ROOM:JOINED', (users) => {
+            console.log('new users:', users)
+        })
+    }, [])
 
     return (
         <div className="App">
