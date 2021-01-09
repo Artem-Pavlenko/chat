@@ -6,7 +6,7 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server, {cors: {origin: "*"}})
 
 
-const port = 9999
+const port = 7777
 const rooms = new Map()
 
 
