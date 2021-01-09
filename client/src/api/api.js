@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export const chat = {
+export const chatAPI = {
     connect: (room, name) => {
         return axios.post('/rooms', {room, name})
     }

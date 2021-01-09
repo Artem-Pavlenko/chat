@@ -28,14 +28,21 @@ app.post('/rooms', (req, res) => {
         ]))
     }
 
-    console.log('rooms:', [...rooms.keys()])
+    console.log('/post rooms:', [...rooms.keys()])
     res.send()
 })
 
-io.on('connection', socket => {
+io.on('connection', (socket) => {
 
-    console.log('(socket) user connected:', socket.id)
+    socket.on('ROOM:JOIN', ({roomId, userName}) => {
+        console.log('(socket) user data:', {roomId, userName})
+        socket.join(roomId)
+        rooms.get(roomId).get('users').socket(socket.id, userName)
+        const users = rooms.get(roomId).get('users').values()
+        socket.to(roomId).broadcast.emit('ROOM:JOINED', users)
+    })
 
+    console.log(`${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()} (socket) user connected:`, socket.id)
 })
 
 server.listen(port, (error) => {

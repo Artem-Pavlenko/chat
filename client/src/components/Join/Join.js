@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import s from './Join.module.scss'
-import {chat} from "../../api/api";
+import {chatAPI} from "../../api/api";
 
 export const Join = ({onLogin}) => {
 
@@ -9,8 +9,8 @@ export const Join = ({onLogin}) => {
 
     const onConnect = () => {
         if (roomValue && nameValue) {
-            chat.connect(roomValue, nameValue).then(() => {
-                onLogin()
+            chatAPI.connect(roomValue, nameValue).then(() => {
+                onLogin({roomId: roomValue, userName: nameValue})
             })
         }
     }

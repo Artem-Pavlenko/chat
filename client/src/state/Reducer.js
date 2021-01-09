@@ -1,15 +1,14 @@
-import {IS_AUTH} from "./type";
+import {JOINED} from "./type";
 
 export const stateReducer = (state, action) => {
     switch (action.type) {
-        case IS_AUTH:
+        case JOINED:
             return {
-                ...state, isAuth: action.payload
+                ...state, isAuth: true, ...action.payload
             }
-
         default:
             return state
     }
 }
 
-export const isAuth = (isAuth) => ({type: IS_AUTH, payload: isAuth})
+export const isJoined = (data) => ({type: JOINED, payload: data})
